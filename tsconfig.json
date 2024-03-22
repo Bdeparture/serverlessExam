@@ -22,13 +22,17 @@
     "strictPropertyInitialization": false,
     "typeRoots": [
       "./node_modules/@types"
+    ],
+    "types": [
+      "aws-lambda"
     ]
-  },
+  }, 
+  "include": [
+    "shared/**/*"
+  ],
   "exclude": [
     "node_modules",
     "cdk.out"
-  ],
-  "include": [
-    "shared/*.json"
-  ],
+  ]
 }
+
