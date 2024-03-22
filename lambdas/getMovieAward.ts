@@ -10,6 +10,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
         const parameters = event?.pathParameters;
         const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
         const awardBody = parameters?.awardBody;
+        const min = event?.queryStringParameters?.min ? parseInt(event.queryStringParameters.min) : undefined;
 
         if (!movieId || !awardBody) {
             return {
@@ -33,7 +34,11 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
                 body: JSON.stringify({ Message: "No information found for this movie and award" }),
             };
         }
-        
+
+        let awards = commandOutput.Items;
+        if (min) {
+            awards = awards.filter(item => item.numAwards >= min);
+        }
 
         const body = {
             data: commandOutput.Items,
